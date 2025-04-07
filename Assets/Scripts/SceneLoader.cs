@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour{
     public Button button;
     public Animator animator;
+    public int sceneIndex;
     void Start(){
-        button.onClick.AddListener(LoadSceneA);
+        button.onClick.AddListener(LoadToScene);
     }
 
     // Update is called once per frame
@@ -15,8 +16,8 @@ public class SceneLoader : MonoBehaviour{
 
     }
 
-    private void LoadSceneA(){
-        StartCoroutine(LoadScene(1));
+    private void LoadToScene(){
+        StartCoroutine(LoadScene(sceneIndex));
     }
 
     IEnumerator LoadScene(int index) {

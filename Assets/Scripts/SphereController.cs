@@ -8,7 +8,6 @@ public class SphereController : MonoBehaviour {
 
     [Header("可视化")]
     public LineRenderer directionArrow;  // 方向箭头
-    public float arrowLength = 2f;       // 箭头长度
 
 
     private Rigidbody rb;
@@ -19,7 +18,6 @@ public class SphereController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         ResetPosition();
-        UpdateArrow();
     }
 
     void Update() {
@@ -50,24 +48,12 @@ public class SphereController : MonoBehaviour {
 
         // 应用旋转并更新方向
         launchDirection = deltaRotation * launchDirection;
-        UpdateArrow();
-    }
-
-    void UpdateArrow() {
-        if (directionArrow != null) {
-            // 设置箭头位置和方向
-            directionArrow.SetPosition(0, transform.position);
-            directionArrow.SetPosition(1, transform.position + launchDirection * arrowLength);
-        }
     }
 
     void Launch() {
         hasLaunched = true;
         rb.useGravity = true;
         rb.velocity = launchDirection.normalized * initialSpeed;
-
-        if (directionArrow != null)
-            directionArrow.enabled = false;
     }
 
     void ResetProjectile() {
@@ -76,9 +62,6 @@ public class SphereController : MonoBehaviour {
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         ResetPosition();
-
-        if (directionArrow != null)
-            directionArrow.enabled = true;
     }
 
     void ResetPosition() {
