@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class SphereController : MonoBehaviour {
@@ -9,18 +10,36 @@ public class SphereController : MonoBehaviour {
     [Header("可视化")]
     public LineRenderer directionArrow;  // 方向箭头
 
+    public TMP_InputField speedInput;
+    public TMP_InputField heightInput;
+    public TMP_InputField fInput;
 
     private Rigidbody rb;
     private Vector3 launchDirection = Vector3.forward;
     private bool hasLaunched = false;
 
+    public bool getLaunch() {
+        return hasLaunched;
+    }
+    
+    void Awake() {
+        initialSpeed = float.Parse(speedInput.text);
+        startHeight = float.Parse(heightInput.text);
+    }
+    
+
     void Start() {
+
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
         ResetPosition();
     }
 
     void Update() {
+        launchDirection = directionArrow.transform.forward;
+        initialSpeed = float.Parse(speedInput.text);
+        startHeight = float.Parse(heightInput.text);
+        rb.drag = float.Parse(fInput.text);
         if (!hasLaunched) {
             // 方向控制
             HandleRotationInput();
@@ -54,6 +73,7 @@ public class SphereController : MonoBehaviour {
         hasLaunched = true;
         rb.useGravity = true;
         rb.velocity = launchDirection.normalized * initialSpeed;
+        directionArrow.gameObject.SetActive(false);
     }
 
     void ResetProjectile() {
@@ -61,6 +81,7 @@ public class SphereController : MonoBehaviour {
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+        directionArrow.gameObject.SetActive(true);
         ResetPosition();
     }
 

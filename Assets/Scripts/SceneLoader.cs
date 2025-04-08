@@ -16,6 +16,9 @@ public class SceneLoader : MonoBehaviour{
 
     }
 
+    public void OnButtonExit() {
+        Application.Quit();
+    }
     private void LoadToScene(){
         StartCoroutine(LoadScene(sceneIndex));
     }
@@ -33,4 +36,6 @@ public class SceneLoader : MonoBehaviour{
         animator.SetBool("FadeIn", false);
         animator.SetBool("FadeOut", true);
     }
+
+
 }
